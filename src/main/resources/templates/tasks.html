@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do Application</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #ff4500;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+        .task {
+            margin-bottom: 15px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            transition: transform 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 400px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: normal;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid black;
+        }
+        
+        .task-actions a {
+            margin-right: 10px;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .task-actions a:hover {
+            color: #ff4500;
+        }
+        .text-strikethrough {
+            text-decoration: line-through;
+            color: gray;
+        }
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-right: 10px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #ff4500; 
+            outline: none; 
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #007bff; 
+            color: white;
+            border: none;
+            border-radius: 4px; 
+            cursor: pointer;
+            transition: background-color 0.3s; 
+        }
+        button:hover {
+            background-color: #ff4500; 
+        }
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>To Do Application</h1>
+<div>
+    <form action="/" method="post">
+        <div>
+            <input type="text" name="title" placeholder="Add a Task..." required aria-label="Task Title">
+            <button type="submit">Add Task</button>
+        </div>
+    </form>
+</div>
+<div>
+    <th:block th:each="task : ${tasks}">
+        <div class="task">
+            <span th:classappend="${task.completed} ? 'text-strikethrough'" th:text="${task.title}">Task Title</span>
+            <div class="task-actions">
+                <a th:href="@{/{id}/toggle(id=${task.id})}" aria-label="Toggle Completion">Toggle</a>
+                <a th:href="@{/{id}/delete(id=${task.id})}" aria-label="Delete Task">Delete</a>
+            </div>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>
